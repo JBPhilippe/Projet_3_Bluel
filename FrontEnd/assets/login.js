@@ -46,7 +46,7 @@ loginButton.addEventListener("click", (e) => {
 
             })
 
-            // Conservation du token ??? voir ours
+            // Conservation du token ??? voir cours
             .then(userData => {
                 console.log("userData: ", userData);
                 if (userData) {
