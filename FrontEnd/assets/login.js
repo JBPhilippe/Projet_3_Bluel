@@ -16,7 +16,7 @@ loginButton.addEventListener("click", (e) => {
         document.getElementById("errorMessage").innerHTML = "Veuillez remplir tous les champs";
         return}
     
-    fetch("http://localhost:5678/api/users/login", {
+    fetch("http://localhost:5678/api/users/login" , {
             method: "POST",
             headers: {accept: "application/json", "Content-type": "application/json",},
             body: JSON.stringify({email: useremail, password: userpassword}),
@@ -26,17 +26,18 @@ loginButton.addEventListener("click", (e) => {
             console.log("authResponse: ", authResponse);
 
             if (authResponse.status === 200) {
-                window.location= "index.html";
                 return authResponse.json();
+                
+
             }
 
             else if (authResponse.status === 401) {
-            errorMessage.innerHTML = "Mot de passe incorrect";
+            errorMessage.innerHTML = "Erreur dans l'identifiant ou le mot de passe";
                 
             }
 
             else if (authResponse.status === 404) {
-            errorMessage.innerHTML = "Utilisateur non trouvé";
+            errorMessage.innerHTML = "Erreur dans l'identifiant ou le mot de passe";
                 
             } 
             
@@ -51,6 +52,7 @@ loginButton.addEventListener("click", (e) => {
                 console.log("userData: ", userData);
                 if (userData) {
                 window.localStorage.setItem("userData", JSON.stringify(userData));
+                window.location= "admin.html";
                 
             }
             })
