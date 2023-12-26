@@ -12,7 +12,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/styleAdmin.css">
-	<script src="./assets/scripts.js" defer></script>
+	<script src="./assets/adminScripts.js" defer></script>
+	
 </head>
 <body>
 
@@ -46,9 +47,74 @@
 	<section id="portfolio">
 
 		<h2>Mes Projets</h2>
+		<button onclick="openSupprModal()"> Modifier </button>
 
-		<div class="categories">
+	<div class="overlayModale" onclick="closeModal()"></div>
+
+	<div class="modaleSupprProjet">
+
+		<button class = btnModalClose onclick="closeModal()">X</button>
+
+		<div class="modaleSupprHead">
+			<h2>Galerie Photo</h2>
 		</div>
+		
+		<div class="modaleSupprBody">
+		</div>
+
+		<div class="modaleSupprFoot">
+			<button class="btnAjoutPhoto" onclick="openAddModale()">Ajout Photo</button>
+
+		</div>
+
+	</div>
+
+	<div class="modaleAddProjet">
+
+		<button class = btnModalClose onclick="closeModal()">X</button>
+		<button classe = btnRetourModaleSuppr onclick="retourModaleSuppr()"> X </button>
+
+		<div class="modaleAddHead">
+			<h2>Ajout Photos</h2>
+		</div>
+		
+		<div class="modaleAddBody">
+
+			<form action="http://localhost:5678/api/works" method="post" id = "addForm">
+
+				<div class="ajoutImageProjet">
+				<label for="imageUrl"></label>
+				<input type="file" name="imageUrl" id="imageUrl">
+				</div>
+
+				<div class="titreProjet">
+					<label for="titre"> Titre </label>
+    				<input type="text" name="titre" id="titre" required />
+				</div>
+
+				<div class="categorieProjet">
+
+					<label for="categorie">Categorie</label><br>
+					<select name="categorie" id="categorie" required>
+  					<option value=""></option>
+  					<option value="1">Objets</option>
+  					<option value="2">Appartements</option>
+  					<option value="3">Hôtels & Restaurant</option>
+  					</select>
+
+				</div>
+
+			
+		</div>
+
+				<div class="modaleAddFoot">
+				<button class="btnValiderAjout" id ="addSubmit">Valider Ajout</button>
+				<p id=errorMessage></p>
+				</div>
+
+			</form>
+
+	</div>
 
 		<div class="gallery"></div>
 		
@@ -77,4 +143,5 @@
 	</nav>
 </footer>
 </body>
+
 </html>

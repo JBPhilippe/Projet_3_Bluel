@@ -18,7 +18,7 @@ loginButton.addEventListener("click", (e) => {
     
     fetch("http://localhost:5678/api/users/login" , {
             method: "POST",
-            headers: {accept: "application/json", "Content-type": "application/json",},
+            headers: {accept: "application/json", "Content-type": "application/json"},
             body: JSON.stringify({email: useremail, password: userpassword}),
         })
 
@@ -47,11 +47,11 @@ loginButton.addEventListener("click", (e) => {
 
             })
 
-            // Conservation du token ??? voir cours
+            
             .then(userData => {
                 console.log("userData: ", userData);
                 if (userData) {
-                window.localStorage.setItem("userData", JSON.stringify(userData));
+                window.localStorage.setItem("token", JSON.stringify(userData.token));
                 window.location= "admin.html";
                 
             }

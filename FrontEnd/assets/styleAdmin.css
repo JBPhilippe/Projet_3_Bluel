@@ -107,6 +107,145 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+.overlayModale {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	display:none;
+}
+
+.modaleSupprProjet {
+	max-width: 600px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width : 700px;
+	height: 700px;
+	background-color: white;
+	padding-top: 50px;
+	border-radius: 20px;
+	padding-left:80px;
+	padding-right: 80px;
+	display:none;
+}
+ #delBtn{
+	position: relative;
+	top: -125px;
+	right: -85px;
+	color: white;
+	background: black;
+	border: none;
+	cursor: pointer;
+ }
+
+.modaleSupprOpen {
+	display: block;
+}
+
+.btnModalClose {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+	font-weight: bolder;
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+
+.modaleSupprHead {
+	margin-top:10px;
+}
+
+.modaleSupprBody {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap:1px;
+	
+}
+
+.projetModale {
+	width: 110px;
+	
+}
+
+.modaleSupprBody img {
+	height :130px;
+	width: 110px;
+	object-fit: fill;
+	margin-top: 10px;
+}
+
+.modaleSupprFoot {
+	text-align: center;
+	margin-top: 20px;
+	padding: 35px;
+	border-top: 1px solid grey;
+}
+
+.btnAjoutPhoto {
+	color: white;
+	height:50px;
+	width: 300px;
+	border:none;
+	border-radius: 20px;
+	background: #1D6154;
+	cursor:pointer;
+}
+
+.modaleAddProjet {
+	max-width: 600px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width : 700px;
+	height: 700px;
+	background-color: white;
+	padding-top: 50px;
+	border-radius: 20px;
+	padding-left:80px;
+	padding-right: 80px;
+	display: none;
+}
+
+.modaleAddOpen {
+	display: block;
+}
+
+.modaleAddBody {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	padding: 35px;
+	border-top: 1px solid grey;
+}
+
+.modaleAddFoot {
+	text-align: center;
+	margin-top: 20px;
+	padding: 35px;
+	border-top: 1px solid grey;
+}
+
+.formulaireAjoutProjet {
+	display:flex;
+	flex-direction: column;
+}
+
+.titreProjet {
+	display:flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+
 nav ul {
 	display: flex;
 	align-items: center;
