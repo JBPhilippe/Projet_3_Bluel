@@ -11,6 +11,8 @@ async function worksApi() {
     return json 
 };
 
+
+
 async function afficherTousProjet () {
 
 let liste = await worksApi()
@@ -19,6 +21,10 @@ afficherProjets(liste)
 }
 
 afficherTousProjet()
+
+
+
+
 
 function afficherProjets(liste) {
 
@@ -36,7 +42,11 @@ function afficherProjets(liste) {
     }
 };
 
-    async function afficherProjetsModale() {
+
+
+
+
+async function afficherProjetsModale() {
    
     let liste = await worksApi()
 
@@ -48,15 +58,11 @@ function afficherProjets(liste) {
         imageProjet.src = list.imageUrl
         imageProjet.id = list.id
         let delBtn = document.createElement("button")
-        delBtn.id = ("delBtn")
+        delBtn.classList.add("delBtn")
+        delBtn.id = imageProjet.id
         delBtn.innerText="X"
+        document.querySelectorAll ("delBtn").onclick = delWorks();
 
-        // Test de suppression, remplacer par method fetch DELETE
-        delBtn.addEventListener('click', () => { 
-            imageProjet.remove() 
-            delBtn.remove()
-        }); 
-    
         modaleSupprBody.appendChild(projet)
         projet.appendChild(imageProjet)
         projet.appendChild(delBtn)
@@ -66,10 +72,10 @@ function afficherProjets(liste) {
 
     }
 
-        
-
-
 afficherProjetsModale();
+
+
+
 
 function openSupprModal() {
 
@@ -107,57 +113,46 @@ function retourModaleSuppr() {
 
 
 
-
-
-function AjoutProjet() {
     let addForm = document.getElementById ("addForm")
     let addSubmit = document.getElementById ("addSubmit")
+
+    addSubmit.addEventListener('click', async event => {
+    event.preventDefault();
+
+    const data = new FormData(addForm);
+
+    const fetchPostHeader = new Headers()
+    fetchPostHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzc3MTA2NiwiZXhwIjoxNzAzODU3NDY2fQ.kl5BpW6H2mmaivWtJhxKSKk8t-MxKz8aYSiHY37Jsf4")
+    fetchPostHeader.append("accept" , "application/json")
+
+    console.log(Array.from(data));
+
+    try { 
+    const res = await fetch('http://localhost:5678/api/works',
+          {
+            headers: fetchPostHeader,
+            method: 'POST',
+            body: data,
+          },
+        );
     
-    addSubmit.addEventListener("click", (e) => {
-        e.preventDefault()
-        document.getElementById("errorMessage").innerHTML = "";
-        let image = addForm.imageUrl.files[0]
-        let titre = addForm.titre.value;
-        let catId = addForm.categorie.value;
-        console.log("Url de l'image: ", image)
-        console.log("Titre du Projet: ", titre);
-        console.log("Categorie du projet: ", catId)
+        const resData = await res.json();
+    
+        console.log(resData);
+      
 
-        console.log(user)
-        fetch("http://localhost:5678/api/works", { // Error 401, sûrement pb dd'authentification, user Id 1 au login et O au post des travaux???
-            method: "POST",
-            headers: { // Moyen de faire appel au localStorage de userData??? 
-                Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzYwOTc3MSwiZXhwIjoxNzAzNjk2MTcxfQ.cJpu4zDtFkQxQQM0EuLuz11Fh-6yI6cj8X7KvYCwTu8`},
-                // accept: "application/json", "Content-type": "multipart/form-data",},
-            body: JSON.stringify({image: image, title: titre, category: catId }),
-        })
+    } catch (err) {
+        console.log(err.message);
+      }
+})
+  
 
-        .then(authResponse => {
-            console.log("authResponse: ", authResponse);
-
-            if (authResponse.status === 201) {
-                return authResponse.json();
-
-            }
-
-            else if (authResponse.status === 400) {
-            errorMessage.innerHTML = "Bad Request";
-                
-            }
-
-            else if (authResponse.status === 401) {
-            errorMessage.innerHTML = "Unauthorized";
-                
-            } 
-            
-            else {
-            errorMessage.textcontent = `Error: ${authResponse.status}`;
-            }
-
-            })
-
-            .catch(error => console.error(error));
-    })
+async function afficherProjet() {
+    let liste = await worksApi()
+    console.table(liste)
 }
 
-AjoutProjet()
+afficherProjet()
+
+
+

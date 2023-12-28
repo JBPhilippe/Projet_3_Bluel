@@ -1,7 +1,3 @@
-//localStorage.clear();
-
-let user = localStorage.getItem("token")
-console.log(user, "youyou")
 
 // on récupère les travaux sur l'API
 async function worksApi() {
@@ -11,7 +7,7 @@ async function worksApi() {
     return json 
 };
 
-// on récupère les catégories sur l'API et on y ajoute l'elt "Tous"
+
 async function catApi() {
     const url = "http://localhost:5678/api/categories"
     const fetcher = await fetch(url)
@@ -20,7 +16,6 @@ async function catApi() {
 };
 
 
-// L'idee est de parcourir l'array de catApi et de générer les boutons filtres => fonctionne pas à VOIR
 
 async function afficherTousProjet () {
 

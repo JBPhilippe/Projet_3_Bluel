@@ -133,7 +133,7 @@ h2{
 	padding-right: 80px;
 	display:none;
 }
- #delBtn{
+ .delBtn{
 	position: relative;
 	top: -125px;
 	right: -85px;
