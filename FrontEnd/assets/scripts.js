@@ -1,3 +1,5 @@
+localStorage.clear();
+
 
 // on récupère les travaux sur l'API
 async function worksApi() {

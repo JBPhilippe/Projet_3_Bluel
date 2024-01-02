@@ -49,6 +49,7 @@ function afficherProjets(liste) {
 async function afficherProjetsModale() {
    
     let liste = await worksApi()
+    
 
     for (let list of liste) {
         let modaleSupprBody = document.querySelector(".modaleSupprBody")
@@ -61,18 +62,39 @@ async function afficherProjetsModale() {
         delBtn.classList.add("delBtn")
         delBtn.id = imageProjet.id
         delBtn.innerText="X"
-        document.querySelectorAll ("delBtn").onclick = delWorks();
+        delBtn.addEventListener("click" , deleteWork)
+
+        function deleteWork () {
+            let id = delBtn.id
+    
+            const fetchDelHeader = new Headers()
+    
+            fetchDelHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNDIwNDg1NywiZXhwIjoxNzA0MjkxMjU3fQ.LR2WrIX3GAvwIFi7ukiuz-R74M2vAmegQ1MyhVRvp48")
+            fetchDelHeader.append("accept" , "*/*")
+            
+            
+            fetch (`http://localhost:5678/api/works/${id}` , {
+    
+                headers : fetchDelHeader,
+                method: "DELETE",
+             })
+             
+            document.querySelector (".modaleSupprBody").innerHTML = ""
+            afficherProjetsModale()
+            console.log("j'ai supprimé le travail n°" + id)
+            }
+
+        
 
         modaleSupprBody.appendChild(projet)
         projet.appendChild(imageProjet)
         projet.appendChild(delBtn)
     }
-  
-        
-
     }
 
-afficherProjetsModale();
+    
+
+
 
 
 
@@ -81,7 +103,8 @@ function openSupprModal() {
 
     document.querySelector (".overlayModale").style.display = "block"
     document.querySelector (".modaleSupprProjet").classList.add("modaleSupprOpen")
-    
+    document.querySelector (".modaleSupprBody").innerHTML = ""
+    afficherProjetsModale()
 }
 
 function openAddModale () {
@@ -102,13 +125,17 @@ function closeModal() {
     // cf précédent comm
     
     document.querySelector (".modaleSupprBody").innerHTML = ""
+    document.querySelector (".gallery").innerHTML=""
     afficherProjetsModale()
+    afficherTousProjet()
+
   
 }
 
 function retourModaleSuppr() {
     document.querySelector (".modaleAddProjet").classList.remove("modaleAddOpen")
-    
+    document.querySelector (".modaleSupprBody").innerHTML = ""
+    afficherProjetsModale()
 }
 
 
@@ -122,7 +149,8 @@ function retourModaleSuppr() {
     const data = new FormData(addForm);
 
     const fetchPostHeader = new Headers()
-    fetchPostHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMzc3MTA2NiwiZXhwIjoxNzAzODU3NDY2fQ.kl5BpW6H2mmaivWtJhxKSKk8t-MxKz8aYSiHY37Jsf4")
+    // Pb récupération token du localStorage à voir, mais fonctionne ac token en dur
+    fetchPostHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNDIwNDg1NywiZXhwIjoxNzA0MjkxMjU3fQ.LR2WrIX3GAvwIFi7ukiuz-R74M2vAmegQ1MyhVRvp48")
     fetchPostHeader.append("accept" , "application/json")
 
     console.log(Array.from(data));
@@ -145,6 +173,13 @@ function retourModaleSuppr() {
         console.log(err.message);
       }
 })
+
+
+
+
+
+
+
   
 
 async function afficherProjet() {
