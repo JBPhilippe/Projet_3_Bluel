@@ -1,8 +1,8 @@
 
 
-let user = localStorage.getItem("token")
-console.log(user)
+let accessToken = JSON.parse(localStorage.getItem("token"));
 
+//********************************************************************/
 
 async function worksApi() {
     const url = "http://localhost:5678/api/works"
@@ -11,7 +11,7 @@ async function worksApi() {
     return json 
 };
 
-
+//********************************************************************/
 
 async function afficherTousProjet () {
 
@@ -22,8 +22,7 @@ afficherProjets(liste)
 
 afficherTousProjet()
 
-
-
+// ***************************************************************/
 
 
 function afficherProjets(liste) {
@@ -43,8 +42,11 @@ function afficherProjets(liste) {
 };
 
 
+//********************************************************************/
 
 
+
+// Fonction affreuse, fonctionne mais affreuse //
 
 async function afficherProjetsModale() {
    
@@ -62,16 +64,17 @@ async function afficherProjetsModale() {
         delBtn.classList.add("delBtn")
         delBtn.id = imageProjet.id
         let deleteIcon = document.createElement("i")
-        deleteIcon.setAttribute("class" , "fa-regular fa-trash-can")
-        document.querySelectorAll("delBtn")
+        deleteIcon.setAttribute("class", "fa-regular fa-trash-can");
         delBtn.addEventListener("click" , deleteWork)
 
+        // surement moyen de mieux faire, par exemple de la sortir et d'y faire appel, mais pour le moment ça fonctionne
+        // Penser a régler le problème de l'incrémentation de l'index (supprimer le travail ET son index à chaque fois par exemple)
         function deleteWork () {
             let id = delBtn.id
-    
+            let bearer = "Bearer " + accessToken
             const fetchDelHeader = new Headers()
     
-            fetchDelHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNDIwNDg1NywiZXhwIjoxNzA0MjkxMjU3fQ.LR2WrIX3GAvwIFi7ukiuz-R74M2vAmegQ1MyhVRvp48")
+            fetchDelHeader.append("Authorization" , bearer)
             fetchDelHeader.append("accept" , "*/*")
             
             
@@ -80,10 +83,9 @@ async function afficherProjetsModale() {
                 headers : fetchDelHeader,
                 method: "DELETE",
              })
-             
+                        
             document.querySelector (".modaleSupprBody").innerHTML = ""
             afficherProjetsModale()
-            console.log("j'ai supprimé le travail n°" + id)
             }
 
         
@@ -98,9 +100,9 @@ async function afficherProjetsModale() {
     
 
 
+//*************************************************************** */
 
-
-
+// on gère les maj de la liste des travaux en fonction des ajouts/suppression
 
 function openSupprModal() {
 
@@ -113,7 +115,7 @@ function openSupprModal() {
 function openAddModale () {
     document.querySelector (".modaleAddProjet").classList.add("modaleAddOpen")
     document.querySelector (".modaleAddBody")
-    document.getElementById("errorMessage").innerHTML = "";
+    //Pensez à supprimmer la valeur des champs du tableau à l'ouverture de la modale
 
     // On supprimme l'HTML de la modale de suppression et on recharge avec la liste actualisée si suppression de projet
     document.querySelector (".modaleSupprBody").innerHTML = ""
@@ -143,8 +145,15 @@ function retourModaleSuppr() {
 
 
 
+// ******************************************************//
+//*******AJOUT DE NOUVEAUX PROJETS********/
+
+
+
     let addForm = document.getElementById ("addForm")
     let addSubmit = document.getElementById ("addSubmit")
+    let bearer = "Bearer " + accessToken
+    document.getElementById("statusMessage").innerHTML = "";
 
     addSubmit.addEventListener('click', async event => {
     event.preventDefault();
@@ -152,45 +161,30 @@ function retourModaleSuppr() {
     const data = new FormData(addForm);
 
     const fetchPostHeader = new Headers()
-    // Pb récupération token du localStorage à voir, mais fonctionne ac token en dur
-    fetchPostHeader.append("Authorization" , "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNDIwNDg1NywiZXhwIjoxNzA0MjkxMjU3fQ.LR2WrIX3GAvwIFi7ukiuz-R74M2vAmegQ1MyhVRvp48")
+    
+    fetchPostHeader.append("Authorization" , bearer)
     fetchPostHeader.append("accept" , "application/json")
 
     console.log(Array.from(data));
 
-    try { 
-    const res = await fetch('http://localhost:5678/api/works',
+    
+        fetch('http://localhost:5678/api/works',
           {
             headers: fetchPostHeader,
             method: 'POST',
             body: data,
-          },
-        );
-    
-        const resData = await res.json();
-    
-        console.log(resData);
-      
+          })
 
-    } catch (err) {
-        console.log(err.message);
-      }
+          .then(resp => resp.json())
+            .then(json => console.log(JSON.stringify(json)))
+        
 })
 
 
+//****************************************************************//
 
 
 
-
-
-  
-
-async function afficherProjet() {
-    let liste = await worksApi()
-    console.table(liste)
-}
-
-afficherProjet()
 
 
 
