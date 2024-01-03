@@ -72,6 +72,15 @@ header {
 	margin: 50px 0
 }
 
+li {
+	color:black
+}
+
+li img { 
+	width: 20px;
+	height: 20px;
+}
+
 section {
 	margin: 50px 0
 }
@@ -93,15 +102,25 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
+
+h3 {
+	text-align: center;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: #1D6154;
+	margin-bottom: 40px;
+} 
+
+
 
 #btnModifier {
 	border: none;
@@ -109,8 +128,13 @@ h2{
 	cursor: pointer;
 }
 
-i.fa-regular.fa-pen-to-square{
+#iconeModifier {
 	color: black;
+}
+
+#iconeEdition {
+	color: white;
+	margin-right: 10px;;
 }
 
 .overlayModale {
@@ -145,7 +169,10 @@ i.fa-regular.fa-pen-to-square{
 	background: black;
 	border: none;
 	cursor: pointer;
+	height: 22px;
+	width: 22px;
  }
+
 
 .modaleSupprOpen {
 	display: block;
@@ -336,7 +363,8 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 3em;
+	margin-top: 3em;
 }
 .gallery {
 	width: 100%;
@@ -344,6 +372,10 @@ li:hover {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+}
+
+.gallery p {
+	margin-top: 10px;
 }
 
 .categories {

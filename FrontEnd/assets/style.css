@@ -97,6 +97,12 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	color: black;
+}
+
+li img {
+	width: 20px;
+	height: 20px;
 }
 
 li:hover {
@@ -184,17 +190,37 @@ li:hover {
 	grid-row-gap: 20px;
 }
 
+.gallery p {
+	margin-top:10px
+}
+
 .categories {
+	display: flex;
+	justify-content: center;
 	text-align: center;
+	margin-bottom: 30px;
+	gap: 30px;
 }
 
 .categories button {
+	font-family: 'Roboto Slab', serif;
+	font-family: 'Syne', sans-serif;
 	color:#1D6154;
+	min-width: 100px;
 	font-size: large;
 	font-weight: bold;
-	border: 1px, solid, #1D6154;
+	border: 1px solid #1D6154;
+	border-color: #1D6154;
 	background-color: white;
+	border-radius: 20px;
+	padding:10px;
 	cursor: pointer;
+}
+
+.categories button:hover {
+	background-color: #1D6154;
+	color: white;
+
 }
 
 .gallery img {

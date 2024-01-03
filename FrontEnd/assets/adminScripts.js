@@ -61,7 +61,9 @@ async function afficherProjetsModale() {
         let delBtn = document.createElement("button")
         delBtn.classList.add("delBtn")
         delBtn.id = imageProjet.id
-        delBtn.innerText="X"
+        let deleteIcon = document.createElement("i")
+        deleteIcon.setAttribute("class" , "fa-regular fa-trash-can")
+        document.querySelectorAll("delBtn")
         delBtn.addEventListener("click" , deleteWork)
 
         function deleteWork () {
@@ -89,6 +91,7 @@ async function afficherProjetsModale() {
         modaleSupprBody.appendChild(projet)
         projet.appendChild(imageProjet)
         projet.appendChild(delBtn)
+        delBtn.appendChild(deleteIcon)
     }
     }
 
