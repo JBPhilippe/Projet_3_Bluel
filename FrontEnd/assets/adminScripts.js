@@ -133,15 +133,27 @@ function closeModal() {
     document.querySelector (".gallery").innerHTML=""
     afficherProjetsModale()
     afficherTousProjet()
-
-  
+    resetForm()
 }
 
 function retourModaleSuppr() {
     document.querySelector (".modaleAddProjet").classList.remove("modaleAddOpen")
     document.querySelector (".modaleSupprBody").innerHTML = ""
     afficherProjetsModale()
+    resetForm()
 }
+
+//** On vide le formulaire et on supprime la div de preview d'image */
+function resetForm() {
+    let form = document.getElementById("addForm")
+    form.reset()
+
+    // mettre condition si pas d'image car erreur autrement
+    let img = document.getElementById("imgPreview")
+    img.remove()
+    
+}
+
 
 
 
@@ -153,7 +165,6 @@ function retourModaleSuppr() {
     let addForm = document.getElementById ("addForm")
     let addSubmit = document.getElementById ("addSubmit")
     let bearer = "Bearer " + accessToken
-    document.getElementById("statusMessage").innerHTML = "";
 
     addSubmit.addEventListener('click', async event => {
     event.preventDefault();
@@ -183,8 +194,20 @@ function retourModaleSuppr() {
 
 //****************************************************************//
 
+/********Création div imgPreview pour prévisualiser l'image avant d'upload *********/
 
+let loadFile = function(event) {
 
+let ajoutImage = document.querySelector(".ajoutImageProjet")
+let image = document.createElement("img")
+image.id = "imgPreview"
 
+ajoutImage.appendChild(image)
 
-
+let imgPreview = document.getElementById('imgPreview');
+imgPreview.src = URL.createObjectURL(event.target.files[0]);
+imgPreview.onload = function() {
+URL.revokeObjectURL(imgPreview.src) // free memory
+}
+};
+				 

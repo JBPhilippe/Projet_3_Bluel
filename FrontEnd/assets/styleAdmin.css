@@ -113,10 +113,8 @@ h2{
 
 h3 {
 	text-align: center;
-	font-family: 'Syne';
-	font-weight: 700;
+	font-family: 'Work Sans';
 	font-size: 30px;
-	color: #1D6154;
 	margin-bottom: 40px;
 } 
 
@@ -212,18 +210,25 @@ h3 {
 	object-fit: contain;
 }
 
+i.fa-trash-can {
+	position: absolute;
+	top:4px;
+	right:5px;
+}
+
 .modaleSupprFoot {
 	text-align: center;
 	width: auto;
 	margin-top: 20px;
 	padding: 35px;
-	border-top: 1px solid grey;
+	border-top: 1px solid black;
 }
 
 .btnAjoutPhoto {
+	font-family: 'Syne';
 	color: white;
-	height:50px;
-	width: 300px;
+	height:40px;
+	width: 250px;
 	border:none;
 	border-radius: 20px;
 	background: #1D6154;
@@ -232,17 +237,18 @@ h3 {
 
 .modaleAddProjet {
 	max-width: 600px;
+	min-height: 615px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width : 700px;
-	height: 700px;
+	width : 430px;
+	height: auto;
 	background-color: white;
 	padding-top: 50px;
 	border-radius: 20px;
-	padding-left:80px;
-	padding-right: 80px;
+	padding-left:100px;
+	padding-right: 100px;
 	display: none;
 }
 
@@ -250,17 +256,38 @@ h3 {
 	display: block;
 }
 
+.btnModalClose , .btnRetourModaleSuppr {
+	position: absolute;
+	border: none;
+	background: white;
+	cursor: pointer;
+	padding:0px;
+	height:40px;
+	width: 40px;
+}
+
+.btnModalClose {
+	right:35px;
+	top:25px;
+}
+
+.btnRetourModaleSuppr {
+	left:35px;
+	top:25px;
+}
+
+i.fa-arrow-left , i.fa-xmark {
+	scale:180%;
+}
+
 .modaleAddBody {
 	display: flex;
 	flex-direction: column;
-	margin-top: 20px;
-	padding: 35px;
-	border-top: 1px solid grey;
+	justify-content: flex-start;
 }
 
 .modaleAddFoot {
 	text-align: center;
-	margin-top: 20px;
 	padding: 35px;
 	border-top: 1px solid grey;
 }
@@ -270,10 +297,106 @@ h3 {
 	flex-direction: column;
 }
 
+.ajoutImageProjet {
+	display: flex;
+	background: #E8F1F6;
+	flex-direction: column;
+	height: 200px;
+	border: 1px solid black;
+	margin-bottom: 30px;
+}
+
+.fa-image {
+	position: absolute;
+	top: 25%;
+	left: 49%;
+	scale:500%;
+	color: grey;
+}
+
+input#image {
+	display: none;
+}
+
+#imgPreview {
+	position: absolute;
+	left: 35%;
+	height: 200px;
+	width: 200px;
+	border-color: white;
+}
+
+.ajoutImageProjet span {
+	text-align: center;
+	background-color: grey;
+	width: 150px;
+	border: none;
+	border-radius: 20px;
+	padding: 10px;
+	position: absolute;
+	top: 34%;
+	left: 37%;
+	cursor: pointer;
+}
+
+
+
+.ajoutImageProjet p {
+	position: absolute;
+	top: 43%;
+	left: 40%;
+}
+
+
+.titreProjet, .categorieProjet {
+	font-weight: bold;
+}
+
+.titreProjet {
+	margin-bottom: 30px;
+}
+
+
+#title , #category {
+	padding-left: 10px;
+	margin-top: 10px;
+	height:50px;
+	border:none;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#category {
+	width: 430px;
+	/* Modification de la flèche du menu déroulant */
+	appearance: none;
+  	background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  	background-repeat: no-repeat;
+  	background-position: right 2rem top 50%;
+  	background-size: 0.65rem auto;
+  	cursor: pointer;
+	/************************/
+}
+
+
+
+.categorieProjet {
+	margin-bottom:50px;
+}
+
 .titreProjet {
 	display:flex;
 	flex-direction: column;
 	justify-content: flex-start;
+}
+
+.btnValiderAjout {
+	color: white;
+	font-family: 'Syne';
+	background: grey;
+	border: none;
+	border-radius: 20px;
+	padding: 10px;
+	width: 250px;
 }
 
 

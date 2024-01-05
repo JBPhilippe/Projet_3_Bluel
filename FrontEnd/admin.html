@@ -53,7 +53,7 @@
 
 	<div class="modaleSupprProjet">
 
-		<button class = btnModalClose onclick="closeModal()">X</button>
+		<button class = btnModalClose onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
 
 		<div class="modaleSupprHead">
 			<h3>Galerie Photo</h>
@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="modaleSupprFoot">
-			<button class="btnAjoutPhoto" onclick="openAddModale()">Ajout Photo</button>
+			<button class="btnAjoutPhoto" onclick="openAddModale()">Ajouter une photo</button>
 
 		</div>
 
@@ -71,8 +71,8 @@
 
 	<div class="modaleAddProjet">
 
-		<button class = btnModalClose onclick="closeModal()">X</button>
-		<button classe = btnRetourModaleSuppr onclick="retourModaleSuppr()"> X </button>
+		<button class = btnModalClose onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+		<button class = btnRetourModaleSuppr onclick="retourModaleSuppr()"><i class="fa-solid fa-arrow-left"></i></button>
 
 		<div class="modaleAddHead">
 			<h3>Ajout Photos</h3>
@@ -83,8 +83,14 @@
 			<form action="http://localhost:5678/api/works" method="post" id = "addForm">
 
 				<div class="ajoutImageProjet">
-				<label for="image"></label>
-				<input type="file" name="image" id="image">
+				<label for="image">
+				<span> + Ajouter photo</span>
+				</label>
+				<i class="fa-regular fa-image"></i>
+				<input type="file" name="image" id="image" onchange="loadFile(event)" >
+				
+				
+				<p>jpg, png : 4mo max</p>
 				</div>
 
 				<div class="titreProjet">
@@ -94,7 +100,7 @@
 
 				<div class="categorieProjet">
 
-					<label for="category">Categorie</label><br>
+					<label for="category">Catégorie</label>
 					<select name="category" id="category" required>
   					<option value=""></option>
   					<option value="1">Objets</option>
@@ -108,8 +114,7 @@
 		</div>
 
 				<div class="modaleAddFoot">
-				<button class="btnValiderAjout" id ="addSubmit">Valider Ajout</button>
-				<p id=statusMessage></p>
+				<button class="btnValiderAjout" id ="addSubmit">Valider</button>
 				</div>
 
 			</form>
