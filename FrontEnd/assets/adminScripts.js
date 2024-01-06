@@ -126,6 +126,7 @@ function closeModal() {
     document.querySelector (".modaleAddProjet").classList.remove("modaleAddOpen")
     document.querySelector (".modaleSupprProjet").classList.remove("modaleSupprOpen")
     document.querySelector (".overlayModale").style.display = "none"
+    resetForm()
 
     // cf précédent comm
     
@@ -133,7 +134,6 @@ function closeModal() {
     document.querySelector (".gallery").innerHTML=""
     afficherProjetsModale()
     afficherTousProjet()
-    resetForm()
 }
 
 function retourModaleSuppr() {
@@ -145,12 +145,24 @@ function retourModaleSuppr() {
 
 //** On vide le formulaire et on supprime la div de preview d'image */
 function resetForm() {
-    let form = document.getElementById("addForm")
-    form.reset()
+
+    try {
+        let form = document.getElementById("addForm")
+        form.reset()
 
     // mettre condition si pas d'image car erreur autrement
-    let img = document.getElementById("imgPreview")
-    img.remove()
+    if (document.getElementById("imgPreview")) {
+        let img = document.getElementById("imgPreview")
+        img.remove()
+        document.getElementById("addSubmit").disabled = true
+
+    } else {
+        //**Rien ne se passe si imgPreview n'est pas généré par un choix d'image ds la fonction loadFile() */
+    }
+
+    } catch (error) {
+        console.log(error)
+    }
     
 }
 
@@ -188,8 +200,12 @@ function resetForm() {
 
           .then(resp => resp.json())
             .then(json => console.log(JSON.stringify(json)))
+            resetForm()
+            disableAddFields()
+
         
 })
+
 
 
 //****************************************************************//
@@ -205,9 +221,61 @@ image.id = "imgPreview"
 ajoutImage.appendChild(image)
 
 let imgPreview = document.getElementById('imgPreview');
+
+//uploadField.onchange = function() {
+//    if(this.files[0].size > 2097152){         Voir pour mettre en place une taille maximum
+//     alert("File is too big!");
+ //      this.value = "";
+   // };
 imgPreview.src = URL.createObjectURL(event.target.files[0]);
+enableAddFields ()
+updateSubmitButton()
 imgPreview.onload = function() {
 URL.revokeObjectURL(imgPreview.src) // free memory
 }
 };
-				 
+
+
+//********Activation du submit si tous les champs sont remplis ********/
+
+
+
+
+
+function updateSubmitButton() {
+
+  try {
+
+    let img = document.getElementById('imgPreview').src
+    let title = document.getElementById(`title`).value
+    let category = document.getElementById(`category`).value
+
+    if (img && title && category !== "") {
+        
+        document.getElementById("addSubmit").disabled = false
+
+    } else {
+        
+        document.getElementById("addSubmit").disabled = true
+    }
+    
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+     
+}
+
+function enableAddFields () {
+
+     document.getElementById("title").disabled = false
+     document.getElementById("category").disabled = false
+}
+
+function disableAddFields () {
+    document.getElementById("title").disabled = true
+     document.getElementById("category").disabled = true
+}
+
+  

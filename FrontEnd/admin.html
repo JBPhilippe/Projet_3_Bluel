@@ -87,7 +87,7 @@
 				<span> + Ajouter photo</span>
 				</label>
 				<i class="fa-regular fa-image"></i>
-				<input type="file" name="image" id="image" onchange="loadFile(event)" >
+				<input type="file" name="image" id="image" onchange="loadFile(event)" accept=".png, .jpg">
 				
 				
 				<p>jpg, png : 4mo max</p>
@@ -95,13 +95,13 @@
 
 				<div class="titreProjet">
 					<label for="title"> Titre </label>
-    				<input type="text" name="title" id="title" required />
+    				<input type="text" name="title" id="title" disabled onkeyup="updateSubmitButton()" />
 				</div>
 
 				<div class="categorieProjet">
 
 					<label for="category">Catégorie</label>
-					<select name="category" id="category" required>
+					<select name="category" id="category" disabled onclick="updateSubmitButton()">
   					<option value=""></option>
   					<option value="1">Objets</option>
   					<option value="2">Appartements</option>
@@ -114,7 +114,7 @@
 		</div>
 
 				<div class="modaleAddFoot">
-				<button class="btnValiderAjout" id ="addSubmit">Valider</button>
+				<button class="btnValiderAjout" id ="addSubmit" disabled>Valider</button>
 				</div>
 
 			</form>

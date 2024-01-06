@@ -377,6 +377,10 @@ input#image {
 	/************************/
 }
 
+#category:disabled {
+	cursor:default;
+}
+
 
 
 .categorieProjet {
@@ -392,11 +396,18 @@ input#image {
 .btnValiderAjout {
 	color: white;
 	font-family: 'Syne';
-	background: grey;
+	background-color: #1D6154;
 	border: none;
 	border-radius: 20px;
 	padding: 10px;
 	width: 250px;
+	cursor:pointer;
+
+}
+
+.btnValiderAjout:disabled {
+	background-color: grey;
+	cursor:default;
 }
 
 
