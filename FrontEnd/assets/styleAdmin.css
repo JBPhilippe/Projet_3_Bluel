@@ -302,7 +302,7 @@ i.fa-arrow-left , i.fa-xmark {
 	background: #E8F1F6;
 	flex-direction: column;
 	height: 200px;
-	border: 1px solid black;
+	border: none;
 	margin-bottom: 30px;
 }
 
@@ -311,7 +311,7 @@ i.fa-arrow-left , i.fa-xmark {
 	top: 25%;
 	left: 49%;
 	scale:500%;
-	color: grey;
+	color: #CBD6DC;
 }
 
 input#image {
@@ -328,7 +328,10 @@ input#image {
 
 .ajoutImageProjet span {
 	text-align: center;
-	background-color: grey;
+	color: #306685;
+	font-family: 'Work Sans';
+	font-weight: bolder;
+	background-color: #CBD6DC;
 	width: 150px;
 	border: none;
 	border-radius: 20px;
@@ -342,9 +345,10 @@ input#image {
 
 
 .ajoutImageProjet p {
+	font-size: smaller;
 	position: absolute;
-	top: 43%;
-	left: 40%;
+	top: 41%;
+	left: 42%;
 }
 
 
@@ -391,6 +395,12 @@ input#image {
 	display:flex;
 	flex-direction: column;
 	justify-content: flex-start;
+}
+
+#uploadStatus {
+	margin-bottom: 30px;
+	color: red;
+	font-weight: bold;
 }
 
 .btnValiderAjout {

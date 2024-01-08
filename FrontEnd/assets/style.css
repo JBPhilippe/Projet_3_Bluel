@@ -53,6 +53,23 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+aside {
+    text-align: center;
+    background-color: black;
+    padding: 20px;
+}
+
+
+aside p {
+    color: white;
+}
+
+#iconeEdition {
+	color: white;
+	margin-right: 10px;;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -98,6 +115,16 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 	color: black;
+}
+
+#log {
+	padding: 0 10px;
+	font-size: 1.2em;
+	color: black;
+}
+
+#log:hover {
+	color: #B1663C;
 }
 
 li img {

@@ -2,15 +2,31 @@
 const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("submit");
 
+function adminMode() {
+        let token = localStorage.getItem("token")
+       console.log(token)
+    
+         if (token !== "") {
+            let aside = document.getElementById("bandeauEdition")
+            let modeEdition = document.createElement("aside")
+            modeEdition.innerHTML = 
+            `<p> <i class="fa-regular fa-pen-to-square" id=iconeEdition> </i>Mode Édition</p>`
+           aside.appendChild(modeEdition)
+    
+            document.getElementById("log").innerHTML = "logout"
+    
+        } else {
+    
+        }
+    }
+    
+
 function validate_login() {
 loginButton.addEventListener("click", (e) => {
     e.preventDefault()
     document.getElementById("errorMessage").innerHTML = "";
     let useremail = loginForm.mail.value;
     let userpassword = loginForm.password.value;
-    // on oublie pas d'effacer les logs après hein
-    console.log("email: ", useremail);
-    console.log("Mdp: ", userpassword);
     
     if (!useremail || !userpassword) {
         document.getElementById("errorMessage").innerHTML = "Veuillez remplir tous les champs";
@@ -52,7 +68,7 @@ loginButton.addEventListener("click", (e) => {
                 console.log("userData: ", userData);
                 if (userData) {
                 window.localStorage.setItem("token", JSON.stringify(userData.token));
-                window.location= "admin.html";
+                window.location= "index.html";
                 
             }
             })
