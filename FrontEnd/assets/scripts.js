@@ -1,10 +1,11 @@
 
 
+let accessToken = JSON.parse(localStorage.getItem("token"))
+
+
 function adminMode() {
 
-    let token = localStorage.getItem("token")
-
-    if (token) {
+    if (accessToken) {
         document.getElementById("bandeauEdition").innerHTML=""
         let aside = document.getElementById("bandeauEdition")
         let modeEdition = document.createElement("aside")
@@ -64,7 +65,7 @@ function adminMode() {
                     </label>
     
                     <i class="fa-regular fa-image"></i>
-                    <input type="file" name="image" id="image" onchange="loadFile(event)" accept=".png, .jpg">
+                    <input type="file" name="image" id="image" onchange="imageToUpload(event)" accept=".png, .jpg">
                     
                     <p>jpg, png : 4mo max</p>
     
@@ -72,13 +73,13 @@ function adminMode() {
     
                     <div class="titreProjet">
                         <label for="title"> Titre </label>
-                        <input type="text" name="title" id="title" disabled onkeyup="updateSubmitButton()" />
+                        <input type="text" name="title" id="title" onkeyup="updateSubmitButton()" />
                     </div>
     
                     <div class="categorieProjet">
     
                         <label for="category">Catégorie</label>
-                        <select name="category" id="category" disabled onclick="updateSubmitButton()">
+                        <select name="category" id="category" onclick="updateSubmitButton()">
                           <option value=""></option>
                           <option value="1">Objets</option>
                           <option value="2">Appartements</option>
@@ -91,6 +92,7 @@ function adminMode() {
             </div>
     
                     <div class="modaleAddFoot">
+                    <p id = "uploadSuccess"></p>
                     <p id = "uploadStatus"></p>
                     <button class="btnValiderAjout" id ="addSubmit" disabled>Valider</button>
                     </div>
@@ -116,12 +118,16 @@ function logOut() {
     window.location= "index.html";
 }
 
+window.onbeforeunload = function (event) {
+    if (event && event.type == "beforeunload") {
+        localStorage.removeItem("token")      
+    }
+};
 
 
+//*************************************************************/
 
 
-
-// on récupère les travaux sur l'API
 async function worksApi() {
     const url = "http://localhost:5678/api/works"
     const fetcher = await fetch (url)
@@ -137,6 +143,8 @@ async function catApi() {
     return json
 };
 
+
+//**** Affichage des projets dans les diverses instances ****/
 
 
 async function afficherTousProjet () {
@@ -166,11 +174,10 @@ function afficherProjets(liste) {
 };
 
 
+
 async function afficherFiltresEtTri() {
 
-    let token = localStorage.getItem("token")
-
-    if (token) {
+    if (accessToken) {
 
     } else {
 
@@ -180,8 +187,8 @@ async function afficherFiltresEtTri() {
     for (let list of listeTri) {
         const barreFiltre = document.querySelector (".categories")
         const btnFiltre = document.createElement ("button")
-        btnFiltre.innerText = list.name;
-        btnFiltre.id = list.id; 
+        btnFiltre.innerText = list.name
+        btnFiltre.id = list.id
         barreFiltre.appendChild(btnFiltre);
         
     }
@@ -191,9 +198,9 @@ async function afficherFiltresEtTri() {
     if (i !== 0) {  
         let btnTri = document.getElementById (listeTri[i].id)
         btnTri.addEventListener ("click", async () =>{
-        document.querySelector(".gallery").innerHTML=""; 
+        document.querySelector(".gallery").innerHTML=""
         let travaux = await worksApi()
-        let liste = travaux.filter((list) => list.categoryId === i);
+        let liste = travaux.filter((list) => list.categoryId === i)
 
         console.table(liste)
         
@@ -206,8 +213,8 @@ async function afficherFiltresEtTri() {
         let liste = await worksApi()
         let btnTri = document.getElementById ("0") 
         btnTri.addEventListener ("click", async () =>{
-        document.querySelector(".gallery").innerHTML="";
-    
+        document.querySelector(".gallery").innerHTML=""
+
         afficherProjets(liste)
         console.table(liste)
     })
@@ -220,9 +227,8 @@ async function afficherFiltresEtTri() {
 afficherFiltresEtTri()
 
 
-let accessToken = JSON.parse(localStorage.getItem("token"));
 
-async function afficherProjetsModale() {
+async function displayProjectsToDelete() {
    
     let liste = await worksApi()
     
@@ -241,7 +247,7 @@ async function afficherProjetsModale() {
         deleteIcon.setAttribute("class", "fa-regular fa-trash-can");
         delBtn.addEventListener("click" , deleteWork)
 
-        // surement moyen de mieux faire, par exemple de la sortir et d'y faire appel, mais pour le moment ça fonctionne
+    
         
         function deleteWork () {
             let id = delBtn.id
@@ -259,7 +265,7 @@ async function afficherProjetsModale() {
              })
                         
             document.querySelector (".modaleSupprBody").innerHTML = ""
-            afficherProjetsModale()
+            displayProjectsToDelete()
             }
 
         
@@ -271,24 +277,24 @@ async function afficherProjetsModale() {
     }
     }
 
-    // on gère les maj de la liste des travaux en fonction des ajouts/suppression
+    
+    
+   //***** Gestion Ouverture/fermetures des modales *****//
 
 function openSupprModal() {
 
     document.querySelector (".overlayModale").style.display = "block"
     document.querySelector (".modaleSupprProjet").classList.add("modaleSupprOpen")
     document.querySelector (".modaleSupprBody").innerHTML = ""
-    afficherProjetsModale()
+    displayProjectsToDelete()
 }
 
 function openAddModale () {
     document.querySelector (".modaleAddProjet").classList.add("modaleAddOpen")
     document.querySelector (".modaleAddBody")
-    //Pensez à supprimmer la valeur des champs du tableau à l'ouverture de la modale
-
-    // On supprimme l'HTML de la modale de suppression et on recharge avec la liste actualisée si suppression de projet
+    
     document.querySelector (".modaleSupprBody").innerHTML = ""
-    afficherProjetsModale()
+    displayProjectsToDelete()
 }
 
 function closeModal() {
@@ -297,30 +303,29 @@ function closeModal() {
     document.querySelector (".overlayModale").style.display = "none"
     resetForm()
 
-    // cf précédent comm
-    
     document.querySelector (".modaleSupprBody").innerHTML = ""
     document.querySelector (".gallery").innerHTML=""
-    afficherProjetsModale()
+    displayProjectsToDelete()
     afficherTousProjet()
 }
 
 function retourModaleSuppr() {
     document.querySelector (".modaleAddProjet").classList.remove("modaleAddOpen")
     document.querySelector (".modaleSupprBody").innerHTML = ""
-    afficherProjetsModale()
+    displayProjectsToDelete()
     resetForm()
 }
 
-//** On vide le formulaire et on supprime la div de preview d'image */
+
+
 function resetForm() {
 
     try {
         let form = document.getElementById("addForm")
         form.reset()
         document.getElementById("uploadStatus").innerHTML=""
+        document.getElementById("uploadSuccess").innerHTML=""
 
-    // mettre condition si pas d'image car erreur autrement
     if (document.getElementById("imgPreview")) {
         let img = document.getElementById("imgPreview")
         img.remove()
@@ -328,7 +333,7 @@ function resetForm() {
         document.getElementById("addSubmit").disabled = true
 
     } else {
-        //**Rien ne se passe si imgPreview n'est pas généré par un choix d'image ds la fonction loadFile() */
+
     }
 
     } catch (error) {
@@ -339,12 +344,12 @@ function resetForm() {
 
 
 
-
-// ******************************************************//
 //*******AJOUT DE NOUVEAUX PROJETS********/
 
-    let token = localStorage.getItem("token")
-    if (token) {
+
+function ajoutProjet() {
+
+    if (accessToken) {
 
     let addForm = document.getElementById ("addForm")
     let addSubmit = document.getElementById ("addSubmit")
@@ -376,21 +381,25 @@ function resetForm() {
           .then(resp => resp.json())
             .then(json => console.log(JSON.stringify(json)))
             resetForm()
-            document.getElementById("uploadStatus").innerHTML = "Projet ajouté!"
-            disableAddFields()
+            document.getElementById("uploadSuccess").innerHTML = "Projet ajouté!"
+            
+           
 }
 )} else {
 
 }
+}
+
+ajoutProjet();
 
 
 
 
 //****************************************************************//
 
-/********Création div imgPreview pour prévisualiser l'image avant d'upload *********/
 
-let loadFile = function(event) {
+
+let imageToUpload = function(event) {
 
 let ajoutImage = document.querySelector(".ajoutImageProjet")
 let image = document.createElement("img")
@@ -398,72 +407,49 @@ image.id = "imgPreview"
 
 ajoutImage.appendChild(image)
 
-let imgPreview = document.getElementById('imgPreview');
+let imgPreview = document.getElementById('imgPreview')
    
-imgPreview.src = URL.createObjectURL(event.target.files[0]);
+imgPreview.src = URL.createObjectURL(event.target.files[0])
+updateSubmitButton()
 
-enableAddFields ()
 };
 
-//******On vérifie la taille de l'image uploadée et on change le texte de status en fonction */
-
-const image = document.getElementById('image');
-
-const statusElement = document.getElementById('uploadStatus');
-
-image.addEventListener('change', event => {
-  const file = image.files[0];
-
-  const maxFileSizeInMB = 4;
-  const maxFileSizeInKB = 1024 * 1024 * maxFileSizeInMB;
-
-  if (file.size > maxFileSizeInKB) {
-    statusElement.innerHTML = `Please select a file that is ${maxFileSizeInMB}MB or less.`;
-    disableAddFields()
-  } else {
-    
-  }
-});
 
 
-
-
-//********Activation du submit si tous les champs sont remplis ********/
+//********Activation du submit ********/
 
 
 function updateSubmitButton() {
 
   try {
-
-    let title = document.getElementById(`title`).value
+    let imgPreview = document.getElementById('imgPreview')
+    let img = imgPreview.src
     let category = document.getElementById(`category`).value
+    let title = document.getElementById(`title`).value
+    
+    let image = document.getElementById('image')
+    let file = image.files[0]
+    const maxFileSizeInMB = 4
+    const maxFileSizeInKB = 1024 * 1024 * maxFileSizeInMB
+    const statusElement = document.getElementById('uploadStatus')
+    
+    if (file.size > maxFileSizeInKB) {
+        statusElement.innerHTML = `Please select a file that is ${maxFileSizeInMB}MB or less.`
+        document.getElementById("addSubmit").disabled = true
+        
 
-    if (title && category !== "") {
+    } else if (title && category && img !== "") {
         
         document.getElementById("addSubmit").disabled = false
 
     } else {
-        
         document.getElementById("addSubmit").disabled = true
-    }
-    
-    
+    }   
+
+
   } catch (error) {
     console.log(error)
     
   }
-     
 }
-
-function enableAddFields () {
-
-     document.getElementById("title").disabled = false
-     document.getElementById("category").disabled = false
-}
-
-function disableAddFields () {
-    document.getElementById("title").disabled = true
-     document.getElementById("category").disabled = true
-}
-
 

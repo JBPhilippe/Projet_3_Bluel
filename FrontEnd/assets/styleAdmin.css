@@ -403,6 +403,13 @@ input#image {
 	font-weight: bold;
 }
 
+#uploadSuccess {
+	margin-bottom: 30px;
+	color: green;
+	font-weight: bold;
+}
+
+
 .btnValiderAjout {
 	color: white;
 	font-family: 'Syne';
