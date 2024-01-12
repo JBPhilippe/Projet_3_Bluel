@@ -2,35 +2,32 @@
 const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("submit");
 
-function adminMode() {
-        let token = localStorage.getItem("token")
-       console.log(token)
-    
-         if (token !== "") {
-            let aside = document.getElementById("bandeauEdition")
-            let modeEdition = document.createElement("aside")
-            modeEdition.innerHTML = 
-            `<p> <i class="fa-regular fa-pen-to-square" id=iconeEdition> </i>Mode Édition</p>`
-           aside.appendChild(modeEdition)
-    
-            document.getElementById("log").innerHTML = "logout"
-    
-        } else {
-    
-        }
-    }
-    
 
 function validate_login() {
+
 loginButton.addEventListener("click", (e) => {
     e.preventDefault()
     document.getElementById("errorMessage").innerHTML = "";
-    let useremail = loginForm.mail.value;
-    let userpassword = loginForm.password.value;
     
+    let useremail = loginForm.email.value;
+    let userpassword = loginForm.password.value;
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(useremail)) {
+        
+    } else {
+        document.getElementById("errorMessage").innerHTML = "Adresse mail invalide";
+        return
+    }
+
+   
     if (!useremail || !userpassword) {
         document.getElementById("errorMessage").innerHTML = "Veuillez remplir tous les champs";
-        return}
+        return
+        
+    } else {
+
+    }
+
     
     fetch("http://localhost:5678/api/users/login" , {
             method: "POST",
@@ -78,3 +75,5 @@ loginButton.addEventListener("click", (e) => {
 
 
 validate_login();
+
+  

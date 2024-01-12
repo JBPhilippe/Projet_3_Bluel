@@ -397,9 +397,8 @@ input#image {
 	justify-content: flex-start;
 }
 
-#uploadStatus {
-	margin-bottom: 30px;
-	color: red;
+#upLoadStatus {
+	margin-top: 10px;
 	font-weight: bold;
 }
 

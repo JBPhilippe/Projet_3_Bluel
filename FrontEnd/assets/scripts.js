@@ -20,89 +20,8 @@ function adminMode() {
         })
 
         document.getElementById("portfolio").innerHTML=""
-        document.getElementById("portfolio").innerHTML =
 
-        `<h2>Mes Projets <button onclick="openSupprModal()" id="btnModifier"><i class="fa-regular fa-pen-to-square" id="iconeModifier"></i> modifier </button></h2>
-		
-
-        <div class="overlayModale" onclick="closeModal()"></div>
-    
-        <div class="modaleSupprProjet">
-    
-            <button class = btnModalClose onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-    
-            <div class="modaleSupprHead">
-                <h3>Galerie Photo</h>
-            </div>
-            
-            <div class="modaleSupprBody">
-            </div>
-    
-            <div class="modaleSupprFoot">
-                <button class="btnAjoutPhoto" onclick="openAddModale()">Ajouter une photo</button>
-    
-            </div>
-    
-        </div>
-    
-        <div class="modaleAddProjet">
-    
-            <button class = btnModalClose onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <button class = btnRetourModaleSuppr onclick="retourModaleSuppr()"><i class="fa-solid fa-arrow-left"></i></button>
-    
-            <div class="modaleAddHead">
-                <h3>Ajout Photo</h3>
-            </div>
-            
-            <div class="modaleAddBody">
-    
-                <form action="http://localhost:5678/api/works" method="post" id = "addForm">
-    
-                    <div class="ajoutImageProjet">
-    
-                    <label for="image">
-                    <span> + Ajouter photo</span>
-                    </label>
-    
-                    <i class="fa-regular fa-image"></i>
-                    <input type="file" name="image" id="image" onchange="imageToUpload(event)" accept=".png, .jpg">
-                    
-                    <p>jpg, png : 4mo max</p>
-    
-                    </div>
-    
-                    <div class="titreProjet">
-                        <label for="title"> Titre </label>
-                        <input type="text" name="title" id="title" onkeyup="updateSubmitButton()" />
-                    </div>
-    
-                    <div class="categorieProjet">
-    
-                        <label for="category">Catégorie</label>
-                        <select name="category" id="category" onclick="updateSubmitButton()">
-                          <option value=""></option>
-                          <option value="1">Objets</option>
-                          <option value="2">Appartements</option>
-                          <option value="3">Hôtels & Restaurant</option>
-                          </select>
-    
-                    </div>
-    
-                
-            </div>
-    
-                    <div class="modaleAddFoot">
-                    <p id = "uploadSuccess"></p>
-                    <p id = "uploadStatus"></p>
-                    <button class="btnValiderAjout" id ="addSubmit" disabled>Valider</button>
-                    </div>
-    
-                </form>
-    
-        </div>
-        
-        <div class="gallery"></div>`
-        
+        createEltsAdminMode ()
 
      } else {
 
@@ -323,14 +242,20 @@ function resetForm() {
     try {
         let form = document.getElementById("addForm")
         form.reset()
-        document.getElementById("uploadStatus").innerHTML=""
-        document.getElementById("uploadSuccess").innerHTML=""
 
     if (document.getElementById("imgPreview")) {
         let img = document.getElementById("imgPreview")
         img.remove()
         
         document.getElementById("addSubmit").disabled = true
+
+    } else {
+
+    }
+
+    if (document.getElementById("upLoadStatus")) {
+        let status = document.getElementById("upLoadStatus")
+        status.innerHTML = ""
 
     } else {
 
@@ -381,7 +306,9 @@ function ajoutProjet() {
           .then(resp => resp.json())
             .then(json => console.log(JSON.stringify(json)))
             resetForm()
-            document.getElementById("uploadSuccess").innerHTML = "Projet ajouté!"
+            document.getElementById ("upLoadStatus")
+            upLoadStatus.style.color = "green"
+            upLoadStatus.textContent = "Projet ajoutés avec succès!"
             
            
 }
@@ -434,7 +361,9 @@ function updateSubmitButton() {
     const statusElement = document.getElementById('uploadStatus')
     
     if (file.size > maxFileSizeInKB) {
-        statusElement.innerHTML = `Please select a file that is ${maxFileSizeInMB}MB or less.`
+        document.getElementById("upLoadStatus")
+        upLoadStatus.style.color = "red"
+        upLoadStatus.textContent =`Please select a file that is ${maxFileSizeInMB}MB or less.`
         document.getElementById("addSubmit").disabled = true
         
 
@@ -453,3 +382,194 @@ function updateSubmitButton() {
   }
 }
 
+
+
+
+function createEltsAdminMode () {
+
+    let portfolio = document.getElementById("portfolio")
+    let h2 = document.createElement ("h2")
+    h2.innerHTML = `Mes Projets <button onclick="openSupprModal()" id="btnModifier"><i class="fa-regular fa-pen-to-square" id="iconeModifier"></i> modifier </button>`
+    portfolio.appendChild(h2)
+
+    let overlayModale = document.createElement("div")
+    overlayModale.classList.add("overlayModale")
+    overlayModale.setAttribute ("onclick" , "closeModal()")
+    portfolio.appendChild(overlayModale)
+
+    //***Modale de suppression***/
+
+    let modaleSupprProjet = document.createElement("div")
+    modaleSupprProjet.classList.add("modaleSupprProjet")
+    portfolio.appendChild(modaleSupprProjet)
+
+    let btnModalClose = document.createElement("button")
+    btnModalClose.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+    btnModalClose.classList.add("btnModalClose")
+    btnModalClose.setAttribute("onclick" , "closeModal()")
+    modaleSupprProjet.appendChild(btnModalClose)
+
+    let modaleSupprHead = document.createElement("div")
+    modaleSupprHead.classList.add("modaleSupprHead")
+    modaleSupprProjet.appendChild(modaleSupprHead)
+
+    let h3Del = document.createElement("h3")
+    h3Del.textContent ="Galerie Photo"
+    modaleSupprHead.appendChild(h3Del)
+
+    let modaleSupprBody = document.createElement("div")
+    modaleSupprBody.classList.add("modaleSupprBody")
+    modaleSupprProjet.appendChild(modaleSupprBody)
+
+    let modaleSupprFoot = document.createElement("div")
+    modaleSupprFoot.classList.add("modaleSupprFoot")
+    modaleSupprProjet.appendChild(modaleSupprFoot)
+
+    let btnAjoutPhoto = document.createElement("button")
+    btnAjoutPhoto.textContent = "Ajouter une photo"
+    btnAjoutPhoto.classList.add("btnAjoutPhoto")
+    btnAjoutPhoto.setAttribute("onclick" , "openAddModale()")
+    modaleSupprFoot.appendChild(btnAjoutPhoto)
+
+    /***Modale Ajout***/
+
+    let modaleAddProjet = document.createElement("div")
+    modaleAddProjet.classList.add("modaleAddProjet")
+    portfolio.appendChild(modaleAddProjet)
+
+    let btnModaleClose = document.createElement("button")
+    btnModaleClose.innerHTML =`<i class="fa-solid fa-xmark"></i>`
+    btnModaleClose.classList.add("btnModalClose")
+    btnModaleClose.setAttribute("onclick" , "closeModal()")
+    modaleAddProjet.appendChild(btnModalClose)
+
+    let btnRetourModaleSuppr = document.createElement("button")
+    btnRetourModaleSuppr.innerHTML =`<i class="fa-solid fa-arrow-left"></i>`
+    btnRetourModaleSuppr.classList.add("btnRetourModaleSuppr")
+    btnRetourModaleSuppr.setAttribute("onclick" , "retourModaleSuppr()")
+    modaleAddProjet.appendChild(btnRetourModaleSuppr)
+
+    let modaleAddHead = document.createElement("div")
+    modaleAddHead.classList.add("modaleAddHead")
+    modaleAddProjet.appendChild(modaleAddHead)
+
+    let h3Add = document.createElement("h3")
+    h3Add.textContent ="Ajout Photo"
+    modaleAddHead.appendChild(h3Add)
+
+    let modaleAddBody = document.createElement("div")
+    modaleAddBody.classList.add("modaleAddBody")
+    modaleAddProjet.appendChild(modaleAddBody)
+
+    let form = document.createElement ("form")
+    form.setAttribute("action" , "http://localhost:5678/api/works")
+    form.setAttribute("method" , "post")
+    form.id = "addForm"
+    modaleAddBody.appendChild(form)
+
+    let ajoutImageProjet = document.createElement("div")
+    ajoutImageProjet.classList.add("ajoutImageProjet")
+    form.appendChild(ajoutImageProjet)
+
+
+     let label = document.createElement("label")
+      label.setAttribute("for" , "image")
+      ajoutImageProjet.appendChild(label)
+
+      let span = document.createElement("span")
+      span.innerHTML =`+ Ajouter photo`
+      label.appendChild(span)
+
+    let icone = document.createElement("i")
+    icone.className ="fa-regular fa-image"
+    ajoutImageProjet.appendChild(icone)
+
+      let inputFile = document.createElement("input")
+      inputFile.setAttribute("type" , "file")
+      inputFile.setAttribute("name", "image")
+      inputFile.setAttribute("id", "image")
+      inputFile.setAttribute("onchange" , "imageToUpload(event)")
+      inputFile.setAttribute("accept" , ".png, .jpg")
+      ajoutImageProjet.appendChild(inputFile)
+
+
+      let pInput = document.createElement("p")
+      pInput.textContent =`jpg, png : 4mo max`
+      ajoutImageProjet.appendChild(pInput)
+
+      let titreProjet = document.createElement("div")
+      titreProjet.classList.add("titreProjet")
+      form.appendChild(titreProjet)
+
+      let labelTitre = document.createElement("label")
+      labelTitre.setAttribute("for" , "title")
+      labelTitre.textContent = "Titre"
+      titreProjet.appendChild(labelTitre)
+
+      let inputTitre = document.createElement("input")
+      inputTitre.setAttribute("type" , "text")
+      inputTitre.setAttribute("name" , "title")
+      inputTitre.setAttribute("id" , "title")
+      inputTitre.setAttribute("onkeyup" , "updateSubmitButton()")
+      titreProjet.appendChild(inputTitre)
+
+
+      let categorieProjet = document.createElement("div")
+      categorieProjet.classList.add("categorieProjet")
+      form.appendChild(categorieProjet)
+
+      let labelCategory = document.createElement("label")
+      labelCategory.setAttribute("for" , "category")
+      labelCategory.textContent = "Categories"
+      categorieProjet.appendChild(labelCategory)
+
+      let inputSelect = document.createElement("select")
+      inputSelect.setAttribute("name" , "category")
+      inputSelect.setAttribute("id" , "category")
+      inputSelect.setAttribute("onclick" , "updateSubmitButton()")
+      categorieProjet.appendChild(inputSelect)
+
+      let optionValue0 = document.createElement("option")
+      optionValue0.setAttribute("value" , "")
+      optionValue0.selected = true
+      optionValue0.textContent =""
+      inputSelect.appendChild(optionValue0)
+
+      let optionValue1 = document.createElement("option")
+      optionValue1.setAttribute("value" , "1")
+      optionValue1.textContent ="Objets"
+      inputSelect.appendChild(optionValue1)
+
+      let optionValue2 = document.createElement("option")
+      optionValue2.setAttribute("value" , "2")
+      optionValue2.textContent ="Appartements"
+      inputSelect.appendChild(optionValue2)
+
+      let optionValue3 = document.createElement("option")
+      optionValue3.setAttribute("value" , "3")
+      optionValue3.textContent ="Hôtels & Restaurant"
+      inputSelect.appendChild(optionValue3)
+
+      let modaleAddFoot = document.createElement("div")
+      modaleAddFoot.classList.add("modaleAddFoot")
+      form.appendChild(modaleAddFoot)
+
+      let btnValiderAjout = document.createElement("button")
+      btnValiderAjout.classList.add("btnValiderAjout")
+      btnValiderAjout.setAttribute("id","addSubmit")
+      btnValiderAjout.setAttribute("disabled" , "")
+      btnValiderAjout.textContent ="Valider"
+      modaleAddFoot.appendChild(btnValiderAjout)
+
+      let upLoadStatus = document.createElement("p")
+      upLoadStatus.id = "upLoadStatus"
+      modaleAddFoot.appendChild(upLoadStatus)
+
+
+      let gallery = document.createElement("div")
+      gallery.classList.add("gallery")
+      portfolio.appendChild(gallery)
+
+
+}
+       
